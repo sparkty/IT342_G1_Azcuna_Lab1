@@ -18,9 +18,11 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-            .httpBasic(basic -> basic.disable())   // disable default basic auth
-            .formLogin(login -> login.disable());  // disable default login page
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/user/me").authenticated()  // Protect /me
+                .anyRequest().permitAll()                          // Everything else is public
+            )
+            .httpBasic(httpBasic -> {}); // Correct lambda usage in Spring Security 6
 
         return http.build();
     }

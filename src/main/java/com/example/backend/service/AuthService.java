@@ -11,38 +11,42 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, BCryptPasswordEncoder encoder) {
+    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.encoder = encoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String register(String username, String email, String password) {
-        if(userRepository.findByUsername(username).isPresent())
+        if (userRepository.findByUsername(username).isPresent()) {
             return "Username already exists";
-        if(userRepository.findByEmail(email).isPresent())
+        }
+        if (userRepository.findByEmail(email).isPresent()) {
             return "Email already exists";
+        }
 
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(encoder.encode(password));
-
+        user.setPassword(passwordEncoder.encode(password)); // hash the password
         userRepository.save(user);
+
         return "User registered successfully";
     }
 
     public String login(String username, String password) {
         Optional<User> userOpt = userRepository.findByUsername(username);
-        if(userOpt.isEmpty())
-            return "User not found";
+        if (userOpt.isEmpty()) {
+            return "Invalid username or password";
+        }
 
         User user = userOpt.get();
-        if(!encoder.matches(password, user.getPassword()))
-            return "Invalid password";
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            return "Invalid username or password";
+        }
 
-        return "Login successful";
+        return "Login successful"; // later we can add session or token info
     }
 
     public Optional<User> getUserByUsername(String username) {
