@@ -16,14 +16,10 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
 
-    public AuthService(UserRepository userRepository,
-                       BCryptPasswordEncoder passwordEncoder,
-                       AuthenticationManager authenticationManager) {
+    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
     }
 
     public String register(String username, String email, String password) {
@@ -40,15 +36,13 @@ public class AuthService {
     }
 
     public String login(String username, String password) {
-        try {
-            Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
-            );
-            // If successful, Spring Security sets up a session automatically
-            return "Login successful";
-        } catch (AuthenticationException e) {
-            return "Invalid username or password";
-        }
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) return "Invalid username or password";
+
+        User user = userOpt.get();
+        if (!passwordEncoder.matches(password, user.getPassword())) return "Invalid username or password";
+
+        return "Login successful";
     }
 
     public Optional<User> getUserByUsername(String username) {

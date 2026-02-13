@@ -1,12 +1,13 @@
 package com.example.backend.security;
 
+import com.example.backend.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Configuration
 public class WebSecurityConfig {
@@ -16,10 +17,10 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // Needed for programmatic authentication in AuthService
+    // Expose AuthenticationManager for AuthService
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean
@@ -27,10 +28,10 @@ public class WebSecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/user/me").authenticated()  // Protect /me
-                .anyRequest().permitAll()                          // Everything else is public
+                .requestMatchers("/api/user/me").authenticated()
+                .anyRequest().permitAll()
             )
-            .httpBasic(httpBasic -> {}); // enable basic auth/session
+            .httpBasic(httpBasic -> {});
 
         return http.build();
     }
