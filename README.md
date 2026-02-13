@@ -1,19 +1,18 @@
-PROJECT DESCRIPTION:
-A simple mini app that has features for logging in and registering, with authentication
+# User Registration & Authentication Mini App
 
-TECHNOLOGIES USED:
+## Project Description
+A simple mini app that allows users to register and log in, with authentication and protected routes.
+
+## Technologies Used
 - XAMPP
 - VS Code
-- PHPMYADMIN
-- REACT.JS
-- JAVASCRIPT
-- SPRING
+- PHPMyAdmin
+- React.js
+- JavaScript
+- Spring Boot
 
-Steps to run Backend:
-1. Make sure MySQL is running and user_auth_db exists as a table
-2. Clone repository
-3. git clone
-4. cd backend
-5. run in vscode terminal: .\mvnw spring-boot:run
-
-to be continued..
+## Steps to Run Backend
+1. Make sure MySQL is running and the database `user_auth_db` exists.
+2. Clone the repository:
+   ```bash
+   git clone <repository-url>
