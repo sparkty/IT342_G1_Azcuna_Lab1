@@ -15,4 +15,4 @@ A simple mini app that allows users to register and log in, with authentication 
 1. Make sure MySQL is running and the database `user_auth_db` exists.
 2. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/sparkty/IT342_G1_Azcuna_Lab1

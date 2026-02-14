@@ -2,11 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,9 +11,10 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    // Change constructor to use PasswordEncoder, not BCryptPasswordEncoder
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }

@@ -12,10 +12,10 @@
 ## FRONTEND
 | Task                                      | Status       |
 |------------------------------------------|-------------|
-| Register page                             | TODO        |
-| Login page                                | TODO        |
-| Dashboard/Profile page (protected)        | TODO        |
-| Logout functionality                      | TODO        |
+| Register page                             | DONE        |
+| Login page                                | DONE        |
+| Dashboard/Profile page (protected)        | DONE        |
+| Logout functionality                      | DONE        |
 
 ## README.md
 | Task                          | Status       |
